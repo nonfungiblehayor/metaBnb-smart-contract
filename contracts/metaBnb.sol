@@ -1,4 +1,5 @@
 pragma solidity ^0.8.0; //SPDX-License-Identifier: UNLICENSED
+// contract address on polygon mumbai scan == 0xbDfDF4b2a0DF9B5548dC98463b02e5ee39dcb11a;
 
 contract metaBnb {
 
@@ -168,8 +169,6 @@ contract metaBnb {
         coOwner[partner1] = true;
         partner1.transfer(amount);
     }
-    // 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db partner1
-// 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2 partner2
 
     mapping(address => bool) public approvals;
     function approvePartner(address partner1, address approvingPartner, uint tokenID) external {

@@ -12,9 +12,11 @@ contract('metaBnb', () => {
     const owner = '0xbafce22c4ecddd7a9e7e0c27ddd9dc92415e399d'
     const tokenId = 1;
     const sender = '0xC00AB10238A2C48D7E952D53Ffd7a2d41c8eEb0B'
+    const newOwner = '0x819841930d93291ade2eabff11de28f2f95803ea'
     const nullValue = 0;
     const duration = 5;
-    const time = 1665783;
+    const time = 16657839;
+    const leaseTime = 15555555;
 
     before(async() => {
         instance = await metaBnb.deployed()
@@ -68,6 +70,50 @@ contract('metaBnb', () => {
         assert(value >= '1')
         const value2 = await instance.getTokenState(tokenId);
          expect(value2).to.equal(false)
+    }
+   })
+
+   it('return lease item', async() => {
+     try {
+        await instance.returnLeaseItem(buyer, owner, tokenId, amount);
+     } catch(error) {
+        assert(time >= leaseTime)
+     }
+   })
+
+   it('buy with a partner', async() => {
+    try {
+        await instance.buyWithAPartner(buyer, owner, amount);
+    } catch(error) {
+    }
+   })
+
+   it('approve partnert', async() => {
+    try {
+        await instance.approvePartner(buyer, owner, tokenId);
+    } catch(error) {
+        const value2 = await instance.getTokenState(tokenId);
+        expect(value2).to.equal(false)
+    }
+   })
+
+   it('buy out partner', async() => {
+    try {
+        await instance.buyOutPartner(owner, buyer, tokenId, amount);
+    } catch(error) {
+        const value2 = await instance.getTokenState(tokenId);
+        expect(value2).to.equal(false)
+        assert(sender == buyer)
+    }
+   })
+
+   it('sell partnership', async() => {
+    try {
+        await instance.sellPartnership(owner, buyer, amount, tokenId, newOwner)
+    } catch(error) {
+        assert(sender == buyer);
+        const value2 = await instance.getTokenState(tokenId);
+        expect(value2).to.equal(false)
     }
    })
 
